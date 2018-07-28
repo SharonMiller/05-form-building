@@ -62,6 +62,8 @@ _Your repository must include:_
 - The new page with the form will need event handling and a template. Where should these pieces go in the code?
 - The new page should not display any other articles; how to manage this?
 
+DONT FORGET TO ANSWER LINE 88 index.HTML
+
 ### Stretch Goal
 *As a user, I want to add highlighting and Markdown formatting so that it is attractive to guests visiting my app.*
 
