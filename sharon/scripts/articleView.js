@@ -3,7 +3,7 @@
 let articleView = {};
 
 articleView.populateFilters = () => {
-  $('article').each(function () {
+  $('article').each(function() {
     if (!$(this).hasClass('template')) {
       let val = $(this).find('address a').text();
       let optionTag = `<option value="${val}">${val}</option>`;
@@ -22,7 +22,7 @@ articleView.populateFilters = () => {
 };
 
 articleView.handleAuthorFilter = () => {
-  $('#author-filter').on('change', function () {
+  $('#author-filter').on('change', function() {
     if ($(this).val()) {
       $('article').hide();
       $(`article[data-author="${$(this).val()}"]`).fadeIn();
@@ -35,7 +35,7 @@ articleView.handleAuthorFilter = () => {
 };
 
 articleView.handleCategoryFilter = () => {
-  $('#category-filter').on('change', function () {
+  $('#category-filter').on('change', function() {
     if ($(this).val()) {
       $('article').hide();
       $(`article[data-category="${$(this).val()}"]`).fadeIn();
@@ -48,7 +48,7 @@ articleView.handleCategoryFilter = () => {
 };
 
 articleView.handleMainNav = () => {
-  $('nav').on('click', '.tab', function (e) {
+  $('nav').on('click', '.tab', function(e) {
     e.preventDefault();
     $('.tab-content').hide();
     $(`#${$(this).data('content')}`).fadeIn();
@@ -59,7 +59,7 @@ articleView.handleMainNav = () => {
 
 articleView.setTeasers = () => {
   $('.article-body *:nth-of-type(n+2)').hide();
-  $('article').on('click', 'a.read-on', function (e) {
+  $('article').on('click', 'a.read-on', function(e) {
     e.preventDefault();
     if ($(this).text() === 'Read on →') {
       $(this).parent().find('*').fadeIn();
@@ -67,7 +67,7 @@ articleView.setTeasers = () => {
     } else {
       $('body').animate({
         scrollTop: ($(this).parent().offset().top)
-      }, 200);
+      },200);
       $(this).html('Read on &rarr;');
       $(this).parent().find('.article-body *:nth-of-type(n+2)').hide();
     }
@@ -77,11 +77,11 @@ articleView.setTeasers = () => {
 // COMMENT: Where is this function called? Why?
 // It is called on the bottom of the HTML page becuase we dont want to use document ready. So the content is realtive to the page being viewed.
 articleView.initNewArticlePage = () => {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation.
+  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later or otherwise edit the tab navigation. DONE
   $('.tab-content').show();
 
 
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // TODO: The new articles we create will be copy/pasted into our source data file. DONE
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
   $('#export-field').hide();
 
@@ -89,7 +89,7 @@ articleView.initNewArticlePage = () => {
     this.select();
   });
 
-  // TODO: Add an event handler to update the preview and the export field if any inputs change.
+  // TODO: Add an event handler to update the preview and the export field if any inputs change. DONE
   $('#new-form').on('change', 'input, textarea', articleView.create);
 };
 
@@ -99,37 +99,31 @@ articleView.create = () => {
   let article;
   $('#articles').empty();
 
-  // TODO: Instantiate an article based on what's in the form fields:
+  // TODO: Instantiate an article based on what's in the form fields: DONE
   article = new Article({
-    //title
     title: $('#article-title').val(),
-    //author
     author: $('#article-author').val(),
-    //authorURL
-    authorUrl: $('#article-url').val(),
-    //category
+    authorUrl: $('#article-author-url').val(),
     category: $('#article-category').val(),
-    //body
     body: $('#article-body').val(),
-    //publishedOn
     publishedOn: $('#article-published:checked').length ? new Date() : null
   });
 
-  // TODO: Use our interface to the Handblebars template to put this new article into the DOM:
+  // TODO: Use our interface to the Handblebars template to put this new article into the DOM: DONE
   $('#articles').append(article.toHtml());
 
-  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each():
-  $('pre code').each(function(i, block) {
+  // TODO: Activate the highlighting of any code blocks; look at the documentation for hljs to see how to do this by placing a callback function in the .each(): DONE
+  $('pre code').each(function(i, block){
     hljs.highlightBlock(block);
   });
 
-  // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+  // TODO: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js: DONE
   $('#export-field').show();
   $('#article-json').val(JSON.stringify(article) + ',');
 };
 
 // COMMENT: Where is this function called? Why?
-// PUT YOUR RESPONSE HERE
+// IT IS CALLED ON THE BOTTOM OF THE NEW.HTML PAGE to initialize the behaviors on that page
 articleView.initIndexPage = () => {
   articles.forEach(article => $('#articles').append(article.toHtml()));
   articleView.populateFilters();
